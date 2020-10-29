@@ -1,6 +1,8 @@
 package thread.rabbit;
 
 import javax.swing.*;
+import java.sql.Time;
+import java.util.Date;
 
 public class Rabbit implements Runnable {
 
@@ -18,18 +20,13 @@ public class Rabbit implements Runnable {
 
     @Override
     public void run() {
+        label:
         for (int index = 0; index < MILESTONES; index++) {
             switch (index) {
-                case 0:
-                    System.out.println("The Rabbit has started from the start line!");
-                    break;
-                case 1:
-                    System.out.println("The Rabbit has reached the Cool River!");
-                    break;
-                case 2:
-                    System.out.println("The Rabbit has reached the Mountain Hill!");
-                    break;
-                case 3:
+                case 0 -> System.out.println("The Rabbit has started from the start line!");
+                case 1 -> System.out.println("The Rabbit has reached the Cool River!");
+                case 2 -> System.out.println("The Rabbit has reached the Mountain Hill!");
+                case 3 -> {
                     System.out.println("The Rabbit has reached the Big Oak Tree!");
                     System.out.println("The Rabbit is leading and hence is going to sleep!");
                     try {
@@ -37,10 +34,11 @@ public class Rabbit implements Runnable {
                     } catch (InterruptedException e) {
                         System.err.println("The Rabbit's sleep got interrupted!");
                     }
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.println("The Rabbit has reached the finish line!");
-                    break;
+                    break label;
+                }
             }
             try {
                 Thread.sleep(1500L);
@@ -48,6 +46,10 @@ public class Rabbit implements Runnable {
                 System.err.println("The rabbit has lost the path!");
             }
         }
+
+        Date date = new Date();
+        Time time = new Time(date.getTime());
+        System.out.println("Rabbit has finished race at: " + time);
         JOptionPane.showConfirmDialog(
                 null,
                 "The Rabbit has completed the race!",
